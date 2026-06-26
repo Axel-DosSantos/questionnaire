@@ -286,12 +286,12 @@ function sendToSheets() {
     .catch(err=>console.warn('POST error:',err));
 }
 
-// Proxy corsproxy.io pour contourner le CORS en lecture
+// Lecture directe via Apps Script avec mot de passe
 async function fetchResponses() {
-  const proxy = 'https://corsproxy.io/?' + encodeURIComponent(SCRIPT_URL);
-  const res = await fetch(proxy);
-  if (!res.ok) throw new Error('Proxy error ' + res.status);
+  const res = await fetch(SCRIPT_URL + '?password=azertyuiop');
+  if (!res.ok) throw new Error('Erreur ' + res.status);
   const json = await res.json();
+  if (json.status === 'error') throw new Error(json.message);
   return json.data || [];
 }
 
