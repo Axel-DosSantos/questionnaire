@@ -7,66 +7,37 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --bg: #f7f7f7;
-    --surface: #ffffff;
-    --border: #e2e2e2;
-    --border-focus: #1a1a1a;
-    --text-primary: #111111;
-    --text-secondary: #555555;
-    --text-muted: #999999;
-    --accent: #1a1a1a;
-    --radius: 6px;
-    --radius-lg: 10px;
+    --bg: #f7f7f7; --surface: #ffffff; --border: #e2e2e2;
+    --border-focus: #1a1a1a; --text-primary: #111111;
+    --text-secondary: #555555; --text-muted: #999999;
+    --accent: #1a1a1a; --radius: 6px; --radius-lg: 10px;
   }
-
-  body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: var(--bg);
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 48px 20px 80px;
-  }
-
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text-primary); min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 48px 20px 80px; }
   .wrapper { width: 100%; max-width: 600px; }
-
-  /* Progress */
   .progress-wrap { margin-bottom: 36px; }
   .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
   .progress-label { font-size: 12px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.04em; text-transform: uppercase; }
   .progress-pct { font-size: 12px; font-weight: 500; color: var(--text-muted); }
   .progress-track { height: 2px; background: var(--border); border-radius: 2px; }
   .progress-fill { height: 2px; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; }
-
-  /* Card */
   .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px 44px 36px; }
   .question-meta { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
   .question-text { font-size: 17px; font-weight: 500; line-height: 1.55; color: var(--text-primary); margin-bottom: 6px; }
   .question-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.5; }
-
-  /* Options */
   .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
   .option { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; transition: border-color 0.12s, background 0.12s; background: var(--surface); font-size: 14px; color: var(--text-primary); line-height: 1.45; user-select: none; }
   .option:hover { border-color: #aaa; background: #fafafa; }
   .option.selected { border-color: var(--accent); background: #f5f5f5; }
-
   .opt-indicator { width: 16px; height: 16px; border: 1.5px solid #ccc; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: all 0.12s; }
   .option.selected .opt-indicator { border-color: var(--accent); background: var(--accent); }
   .option.selected .opt-indicator::after { content: ''; width: 5px; height: 5px; background: #fff; border-radius: 50%; display: block; }
   .opt-indicator-sq { border-radius: 3px !important; }
   .option.selected .opt-indicator-sq::after { content: ''; width: 8px; height: 5px; border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff; transform: rotate(-45deg) translateY(-1px); display: block; background: transparent; border-radius: 0; }
-
   .max-hint { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
-
   textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 14px; color: var(--text-primary); resize: vertical; min-height: 120px; background: var(--surface); outline: none; margin-bottom: 32px; transition: border-color 0.12s; line-height: 1.6; }
   textarea:focus { border-color: var(--border-focus); }
   textarea::placeholder { color: var(--text-muted); }
-
-  /* Buttons */
   .btn-row { display: flex; align-items: center; justify-content: space-between; }
   .btn-row-right { margin-left: auto; display: flex; gap: 10px; }
   .btn { font-family: inherit; font-size: 13px; font-weight: 500; padding: 10px 22px; border-radius: var(--radius); border: 1px solid transparent; cursor: pointer; transition: all 0.12s; letter-spacing: 0.01em; }
@@ -79,49 +50,41 @@
   .btn-submit:hover { background: #333; }
   .btn-restart { background: transparent; border-color: var(--border); color: var(--text-secondary); margin-top: 20px; }
   .btn-restart:hover { border-color: #aaa; color: var(--text-primary); }
-
-  /* End */
   .end-screen { text-align: center; padding: 12px 0 4px; }
   .end-title { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
   .end-sub { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 380px; margin: 0 auto 32px; }
   .end-divider { width: 32px; height: 2px; background: var(--border); margin: 0 auto 28px; }
 
-  /* ── ADMIN ── */
+  /* ADMIN */
   #adminOverlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 100; overflow-y: auto; padding: 40px 20px 80px; }
   .admin-wrap { max-width: 900px; margin: 0 auto; }
-
   .admin-topbar { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); gap: 16px; }
   .admin-topbar h2 { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
   .admin-topbar-sub { font-size: 13px; color: var(--text-muted); }
   .admin-actions { display: flex; gap: 10px; flex-shrink: 0; }
   .btn-outline { font-family: inherit; font-size: 13px; font-weight: 500; padding: 9px 18px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); color: var(--text-secondary); cursor: pointer; transition: all 0.12s; white-space: nowrap; }
   .btn-outline:hover { border-color: #aaa; color: var(--text-primary); }
-  .btn-dark { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .btn-dark:hover { background: #333; }
-
+  .btn-dark { background: var(--accent) !important; color: #fff !important; border-color: var(--accent) !important; }
+  .btn-dark:hover { background: #333 !important; }
   .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 32px; }
   .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 22px; }
   .stat-num { font-size: 30px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; line-height: 1; }
   .stat-lbl { font-size: 12px; color: var(--text-muted); font-weight: 500; }
-
   .admin-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 28px; }
   .atab { font-family: inherit; font-size: 13px; font-weight: 500; padding: 10px 18px; border: none; background: transparent; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.12s; }
   .atab.active { color: var(--text-primary); border-bottom-color: var(--accent); }
   .atab:hover { color: var(--text-primary); }
   .tab-pane { display: none; }
   .tab-pane.active { display: block; }
-
   .section-lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin: 28px 0 12px; }
   .section-lbl:first-child { margin-top: 0; }
-
   .chart-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 10px; }
   .chart-block h4 { font-size: 13px; font-weight: 500; color: var(--text-primary); margin-bottom: 16px; line-height: 1.5; }
-  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; font-size: 13px; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
   .bar-label { width: 230px; flex-shrink: 0; color: var(--text-secondary); line-height: 1.4; font-size: 12px; }
   .bar-track { flex: 1; background: #f0f0f0; border-radius: 2px; height: 5px; overflow: hidden; }
-  .bar-fill { height: 5px; background: var(--accent); border-radius: 2px; transition: width 0.5s ease; min-width: 0; }
+  .bar-fill { height: 5px; background: var(--accent); border-radius: 2px; transition: width 0.5s ease; }
   .bar-val { width: 24px; text-align: right; color: var(--text-muted); font-size: 12px; }
-
   .resp-list { display: flex; flex-direction: column; gap: 10px; }
   .resp-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 22px; font-size: 13px; }
   .resp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
@@ -130,14 +93,11 @@
   .resp-row { color: var(--text-secondary); margin-bottom: 5px; line-height: 1.5; }
   .resp-row strong { color: var(--text-primary); font-weight: 500; }
   .resp-verbatim { margin-top: 10px; padding: 10px 14px; background: var(--bg); border-radius: var(--radius); color: var(--text-secondary); font-style: italic; line-height: 1.6; font-size: 13px; }
-  .resp-tag { display: inline-block; background: #f0f0f0; border-radius: 4px; padding: 2px 8px; font-size: 11px; color: var(--text-secondary); margin: 2px 2px 2px 0; }
-  .resp-tag.positive { background: #e8f5e9; color: #2e7d32; }
-  .resp-tag.neutral { background: #fff3e0; color: #e65100; }
-  .resp-tag.negative { background: #fce4ec; color: #c62828; }
-
-  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px; }
-
-  /* Login */
+  .resp-tag { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 500; }
+  .tag-positive { background: #e8f5e9; color: #2e7d32; }
+  .tag-neutral { background: #fff3e0; color: #e65100; }
+  .tag-negative { background: #fce4ec; color: #c62828; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
   .login-box { max-width: 360px; margin: 80px auto 0; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; }
   .login-box h2 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
   .login-box p { font-size: 13px; color: var(--text-muted); margin-bottom: 28px; line-height: 1.5; }
@@ -148,8 +108,8 @@
   .btn-login:hover { background: #333; }
   .btn-login-cancel { width: 100%; padding: 10px; background: transparent; color: var(--text-muted); border: 1px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 13px; cursor: pointer; transition: all 0.12s; }
   .btn-login-cancel:hover { color: var(--text-primary); border-color: #aaa; }
-
   .loading-msg { text-align: center; padding: 60px 20px; color: var(--text-muted); font-size: 14px; }
+  .error-msg { text-align: center; padding: 40px 20px; color: #c0392b; font-size: 13px; line-height: 1.6; }
 
   @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .fade-slide { animation: fadeSlide 0.2s ease; }
@@ -192,65 +152,45 @@ let autoTimer = null;
 let adminAuth = false;
 let adminTab  = 'stats';
 
-// ── STEPS ──────────────────────────────────────────────────────────────
 const steps = {
-  q1:  { meta:'Question 1 sur 11', text:"Dans quelle tranche d'âge vous situez-vous ?", type:'single',
-         opts:['Moins de 30 ans','30 à 44 ans','45 à 59 ans','60 à 74 ans','75 ans et plus'] },
+  q1:  { meta:'Question 1 sur 11', text:"Dans quelle tranche d'âge vous situez-vous ?", type:'single', opts:['Moins de 30 ans','30 à 44 ans','45 à 59 ans','60 à 74 ans','75 ans et plus'] },
   q2:  { meta:'Question 2 sur 11', text:"Saviez-vous qu'il était possible de faire appel à un traiteur à domicile pour le repas qui suit des obsèques ?", type:'single', opts:['Oui','Non'] },
   q3:  { meta:'Question 3 sur 11', text:"Avez-vous déjà eu à organiser tout ou partie d'un repas de partage après des obsèques ?", type:'single', opts:['Oui','Non'] },
   q3b: { meta:'Question 3 sur 11', text:"Qu'est-ce qui vous a semblé le plus difficile ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
          opts:["Gérer les démarches liées aux obsèques en parallèle","Rester disponible pour accueillir les proches","Préparer les plats moi-même","Trouver un traiteur adapté","Gérer l'organisation et le service du repas","Faire la vaisselle et le rangement","Choisir entre un repas à domicile ou au restaurant","Rien de particulier","Autre"] },
-  q4:  { meta:'Question 4 sur 11', text:"Si vous deviez organiser ce moment aujourd'hui, envisageriez-vous de faire appel à un service de traiteur à domicile ?", type:'single',
-         opts:["Oui, certainement","Oui, probablement","Je ne sais pas","Probablement pas","Non"] },
+  q4:  { meta:'Question 4 sur 11', text:"Si vous deviez organiser ce moment aujourd'hui, envisageriez-vous de faire appel à un service de traiteur à domicile ?", type:'single', opts:["Oui, certainement","Oui, probablement","Je ne sais pas","Probablement pas","Non"] },
   q5:  { meta:'Question 5 sur 11', text:"Qu'attendriez-vous avant tout d'un tel service ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
          opts:["Être soulagé(e) de l'organisation du repas","Pouvoir rester auprès de mes proches","Réduire la charge mentale","Accueillir la famille sereinement à domicile","Éviter les contraintes d'un restaurant","Ne pas avoir à gérer la vaisselle ni le rangement","Offrir un moment chaleureux et convivial","Bénéficier d'un service discret et respectueux","Autre"] },
   q6:  { meta:'Question 6 sur 11', text:"Quels éléments vous mettraient le plus en confiance ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
          opts:["Des avis de familles ayant utilisé ce service","Une équipe discrète et respectueuse","Des tarifs transparents","Une expérience dans ce type d'accompagnement","Une présentation claire des prestations","Un premier échange téléphonique","Des produits de qualité","Une entreprise familiale","Autre"] },
-  q7:  { meta:'Question 7 sur 11', text:"Le fait que ce service soit assuré par une petite équipe familiale constitue pour vous :", type:'single',
-         opts:["Un vrai critère de confiance","Un élément rassurant, sans être déterminant","Un point qui m'est indifférent","Un élément qui pourrait me faire hésiter"] },
-  q8:  { meta:'Question 8 sur 11', text:"Quel type de prestation vous semblerait le plus adapté ?", sub:"Buffet = plats en libre-service · Cocktail = petites pièces à grignoter", type:'single',
-         opts:["Buffet froid","Buffet chaud","Cocktail salé","Cocktail salé et sucré","Café, boissons et mignardises uniquement","Je ne sais pas"] },
-  q9:  { meta:'Question 9 sur 11', text:"Quel budget vous semblerait raisonnable pour une prestation complète — courses, préparation, livraison, installation, service et vaisselle ?", type:'single',
-         opts:["Moins de 20 € par personne","Entre 20 € et 30 € par personne","Entre 30 € et 40 € par personne","Plus de 40 € par personne","Je ne sais pas"] },
-  q10: { meta:'Question 10 sur 11', text:"Comment penseriez-vous à rechercher ce type de prestation ?", type:'single',
-         opts:["Je demanderais conseil à une entreprise de pompes funèbres","J'effectuerais une recherche sur Internet","Je demanderais à mes proches","Je contacterais un traiteur que je connais déjà","Je demanderais conseil à une mairie ou une association","Autre"] },
+  q7:  { meta:'Question 7 sur 11', text:"Le fait que ce service soit assuré par une petite équipe familiale constitue pour vous :", type:'single', opts:["Un vrai critère de confiance","Un élément rassurant, sans être déterminant","Un point qui m'est indifférent","Un élément qui pourrait me faire hésiter"] },
+  q8:  { meta:'Question 8 sur 11', text:"Quel type de prestation vous semblerait le plus adapté ?", sub:"Buffet = plats en libre-service · Cocktail = petites pièces à grignoter", type:'single', opts:["Buffet froid","Buffet chaud","Cocktail salé","Cocktail salé et sucré","Café, boissons et mignardises uniquement","Je ne sais pas"] },
+  q9:  { meta:'Question 9 sur 11', text:"Quel budget vous semblerait raisonnable pour une prestation complète — courses, préparation, livraison, installation, service et vaisselle ?", type:'single', opts:["Moins de 20 € par personne","Entre 20 € et 30 € par personne","Entre 30 € et 40 € par personne","Plus de 40 € par personne","Je ne sais pas"] },
+  q10: { meta:'Question 10 sur 11', text:"Comment penseriez-vous à rechercher ce type de prestation ?", type:'single', opts:["Je demanderais conseil à une entreprise de pompes funèbres","J'effectuerais une recherche sur Internet","Je demanderais à mes proches","Je contacterais un traiteur que je connais déjà","Je demanderais conseil à une mairie ou une association","Autre"] },
   q11: { meta:'Question 5 sur 11', text:"Quelles seraient vos principales raisons de ne pas y faire appel — ou d'hésiter ?", sub:"Plusieurs réponses possibles, puis cliquez sur Continuer", type:'multi', max:99,
          opts:["Je préférerais cuisiner moi-même","Ma famille s'en chargerait","Je préférerais organiser un repas au restaurant","Je trouverais ce service trop coûteux","Je ne me sentirais pas à l'aise avec un prestataire dans ce contexte","J'aurais besoin de mieux connaître ce type de service","Je manquerais de confiance envers le prestataire","Autre"] },
-  q12: { meta:'Question 6 sur 11', text:"Qu'est-ce qui pourrait vous rassurer ou vous faire changer d'avis ?", type:'single',
-         opts:["Une recommandation des pompes funèbres","Des avis de familles ayant utilisé ce service","Une meilleure connaissance de la prestation","Des tarifs plus accessibles","Une entreprise familiale","Rien, je préférerais toujours une autre solution","Autre"] },
+  q12: { meta:'Question 6 sur 11', text:"Qu'est-ce qui pourrait vous rassurer ou vous faire changer d'avis ?", type:'single', opts:["Une recommandation des pompes funèbres","Des avis de familles ayant utilisé ce service","Une meilleure connaissance de la prestation","Des tarifs plus accessibles","Une entreprise familiale","Rien, je préférerais toujours une autre solution","Autre"] },
   q13: { meta:'Pour finir', text:"Un dernier mot ? (facultatif)", sub:"Une attente, une inquiétude ou une idée à partager concernant ce type de service.", type:'textarea' },
   fin: { type:'fin' }
 };
 
-// ── ROUTING ────────────────────────────────────────────────────────────
 function nextStep(from) {
   const q4 = A['q4'];
   if (inHesitantTail && from==='q6') return 'q7';
   if (inHesitantTail && from==='q7') { inHesitantTail=false; return 'q9'; }
-  if (from==='q12') {
-    if (q4==='Je ne sais pas') { inHesitantTail=true; return 'q6'; }
-    return 'q9';
-  }
-  const map = {
-    q1:'q2', q2:'q3',
-    q3: A['q3']==='Oui' ? 'q3b' : 'q4',
-    q3b:'q4',
-    q4: (q4==='Oui, certainement'||q4==='Oui, probablement') ? 'q5' : 'q11',
-    q5:'q6', q6:'q7', q7:'q8', q8:'q9', q9:'q10', q10:'q13', q11:'q12', q13:'fin'
-  };
-  return map[from] || 'fin';
+  if (from==='q12') { if (q4==='Je ne sais pas') { inHesitantTail=true; return 'q6'; } return 'q9'; }
+  const map = { q1:'q2', q2:'q3', q3:A['q3']==='Oui'?'q3b':'q4', q3b:'q4', q4:(q4==='Oui, certainement'||q4==='Oui, probablement')?'q5':'q11', q5:'q6', q6:'q7', q7:'q8', q8:'q9', q9:'q10', q10:'q13', q11:'q12', q13:'fin' };
+  return map[from]||'fin';
 }
 
 function getProgress() { return Math.min(100, Math.round((hist.length/12)*100)); }
 
-// ── RENDER ─────────────────────────────────────────────────────────────
 function render(id) {
   if (autoTimer) { clearTimeout(autoTimer); autoTimer=null; }
-  const pct = getProgress();
-  document.getElementById('progressFill').style.width = pct+'%';
-  document.getElementById('progressPct').textContent = pct+' %';
-  const s = steps[id];
-  if (!s) return;
+  const pct=getProgress();
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressPct').textContent=pct+' %';
+  const s=steps[id]; if (!s) return;
 
   if (s.type==='fin') {
     document.getElementById('progressFill').style.width='100%';
@@ -262,17 +202,16 @@ function render(id) {
         <div class="end-sub">Vos réponses nous aideront à concevoir un service adapté aux besoins des familles. Nous vous en remercions sincèrement.</div>
         <button class="btn btn-restart" onclick="restart()">Recommencer depuis le début</button>
       </div>`;
-    sendToSheets();
-    return;
+    sendToSheets(); return;
   }
 
-  const metaHtml = s.meta ? `<div class="question-meta">${s.meta}</div>` : '';
-  const subHtml  = s.sub  ? `<div class="question-sub">${s.sub}</div>` : '';
-  let body = '';
+  const metaHtml=s.meta?`<div class="question-meta">${s.meta}</div>`:'';
+  const subHtml=s.sub?`<div class="question-sub">${s.sub}</div>`:'';
+  let body='';
 
   if (s.type==='single') {
-    const sel = A[id]||null;
-    body = `<div class="options">`+s.opts.map(o=>{
+    const sel=A[id]||null;
+    body=`<div class="options">`+s.opts.map(o=>{
       const esc=o.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
       return `<div class="option${sel===o?' selected':''}" onclick="selSingle('${id}',this,'${esc}')"><div class="opt-indicator"></div><span>${o}</span></div>`;
     }).join('')+`</div>`;
@@ -290,12 +229,8 @@ function render(id) {
   const isFirst=hist.length===0;
   const backBtn=isFirst?'':`<button class="btn btn-back" onclick="goBack()">Retour</button>`;
   let nextBtn='';
-  if (s.type==='multi') {
-    const dis=(!A[id]||A[id].length===0)?'disabled':'';
-    nextBtn=`<button class="btn btn-continue" id="bn" onclick="goNext()" ${dis}>Continuer</button>`;
-  } else if (s.type==='textarea') {
-    nextBtn=`<button class="btn btn-submit" onclick="goNext()">Envoyer mes réponses</button>`;
-  }
+  if (s.type==='multi') { const dis=(!A[id]||A[id].length===0)?'disabled':''; nextBtn=`<button class="btn btn-continue" id="bn" onclick="goNext()" ${dis}>Continuer</button>`; }
+  else if (s.type==='textarea') { nextBtn=`<button class="btn btn-submit" onclick="goNext()">Envoyer mes réponses</button>`; }
 
   document.getElementById('card').innerHTML=`
     <div class="fade-slide">
@@ -314,8 +249,7 @@ function selMulti(id,el,val,max) {
   if (!A[id]) A[id]=[];
   if (el.classList.contains('selected')) { A[id]=A[id].filter(v=>v!==val); el.classList.remove('selected'); }
   else { if (A[id].length<max) { A[id].push(val); el.classList.add('selected'); } }
-  const bn=document.getElementById('bn');
-  if (bn) bn.disabled=A[id].length===0;
+  const bn=document.getElementById('bn'); if (bn) bn.disabled=A[id].length===0;
 }
 function goNext() {
   if (autoTimer) { clearTimeout(autoTimer); autoTimer=null; }
@@ -339,7 +273,7 @@ function restart() {
   render('q1'); window.scrollTo({top:0,behavior:'smooth'});
 }
 
-// ── GOOGLE SHEETS ──────────────────────────────────────────────────────
+// ── GOOGLE SHEETS ──────────────────────────────────────
 function sendToSheets() {
   const payload={
     date:new Date().toLocaleString('fr-FR'),
@@ -349,16 +283,32 @@ function sendToSheets() {
     q12:A.q12||'',q13:A.q13||''
   };
   fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
-    .catch(err=>console.warn('Sheets POST error:',err));
+    .catch(err=>console.warn('POST error:',err));
 }
 
-async function fetchResponses() {
-  const res = await fetch(SCRIPT_URL+'?action=get');
-  const json = await res.json();
-  return json.data || [];
+// JSONP pour contourner le CORS en lecture
+function fetchResponses() {
+  return new Promise((resolve, reject) => {
+    const cbName = 'jsonpCb_' + Date.now();
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => {
+      delete window[cbName];
+      document.body.removeChild(script);
+      reject(new Error('Timeout'));
+    }, 10000);
+    window[cbName] = function(data) {
+      clearTimeout(timeout);
+      delete window[cbName];
+      document.body.removeChild(script);
+      resolve(data.data || []);
+    };
+    script.src = SCRIPT_URL + '?callback=' + cbName;
+    script.onerror = () => { clearTimeout(timeout); delete window[cbName]; reject(new Error('Script error')); };
+    document.body.appendChild(script);
+  });
 }
 
-// ── ADMIN ──────────────────────────────────────────────────────────────
+// ── ADMIN ──────────────────────────────────────────────
 function showAdmin() {
   document.getElementById('adminOverlay').style.display='block';
   document.body.style.overflow='hidden';
@@ -368,7 +318,6 @@ function hideAdmin() {
   document.getElementById('adminOverlay').style.display='none';
   document.body.style.overflow='';
 }
-
 function renderLogin() {
   document.getElementById('adminContent').innerHTML=`
     <div class="login-box">
@@ -389,23 +338,37 @@ function checkPwd() {
 async function renderAdmin() {
   document.getElementById('adminContent').innerHTML=`<div class="loading-msg">Chargement des données…</div>`;
   let rows=[];
-  try { rows=await fetchResponses(); } catch(e) { console.warn(e); }
+  try {
+    rows = await fetchResponses();
+  } catch(e) {
+    document.getElementById('adminContent').innerHTML=`
+      <div class="admin-topbar">
+        <div><h2>Résultats du questionnaire</h2></div>
+        <div class="admin-actions"><button class="btn-outline btn-dark" onclick="hideAdmin()">Fermer</button></div>
+      </div>
+      <div class="error-msg">
+        Impossible de charger les données.<br>
+        Vérifiez que le déploiement Apps Script est bien configuré avec accès <strong>"Tout le monde"</strong> et que le callback JSONP est supporté.<br><br>
+        <button class="btn-outline" onclick="renderAdmin()" style="margin-top:12px">Réessayer</button>
+      </div>`;
+    return;
+  }
 
   const total=rows.length;
   const todayStr=new Date().toLocaleDateString('fr-FR');
   const todayCount=rows.filter(r=>(r['Date']||'').startsWith(todayStr)).length;
-
-  // intention split
   const positif=rows.filter(r=>['Oui, certainement','Oui, probablement'].includes(r['Intention'])).length;
 
-  // chart helper
   function makeChart(title, values) {
-    if (!values.length) return `<div class="chart-block"><h4>${title}</h4><div style="font-size:12px;color:var(--text-muted)">Aucune donnée</div></div>`;
     const counts={};
-    values.forEach(v=>{ if(!v) return; (Array.isArray(v)?v:[v]).forEach(x=>{ x=x.toString().trim(); if(x) counts[x]=(counts[x]||0)+1; }); });
+    values.forEach(v=>{
+      if (!v) return;
+      const arr=typeof v==='string'&&v.includes(', ')?v.split(', '):[v];
+      arr.forEach(x=>{ x=x.toString().trim(); if(x) counts[x]=(counts[x]||0)+1; });
+    });
+    if (!Object.keys(counts).length) return `<div class="chart-block"><h4>${title}</h4><div style="font-size:12px;color:var(--text-muted)">Aucune donnée</div></div>`;
     const max=Math.max(...Object.values(counts),1);
-    const sorted=Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-    const bars=sorted.map(([label,count])=>`
+    const bars=Object.entries(counts).sort((a,b)=>b[1]-a[1]).map(([label,count])=>`
       <div class="bar-row">
         <div class="bar-label">${label}</div>
         <div class="bar-track"><div class="bar-fill" style="width:${Math.round(count/max*100)}%"></div></div>
@@ -414,34 +377,50 @@ async function renderAdmin() {
     return `<div class="chart-block"><h4>${title}</h4>${bars}</div>`;
   }
 
-  function col(key) { return rows.map(r=>{
-    const v=r[key]||'';
-    if (typeof v==='string'&&v.includes(', ')) return v.split(', ');
-    return v;
-  }); }
+  function col(key) { return rows.map(r=>r[key]||''); }
 
-  // Export CSV
   window._exportCSV=function() {
     const headers=['Date','Âge','Connaissait le service','A déjà organisé','Difficultés rencontrées','Intention','Attentes','Critères de confiance','Équipe familiale','Type de prestation','Budget','Canal de recherche','Freins','Levier de réassurance','Commentaire libre'];
-    const csvRows=[headers.join(';'),...rows.map(r=>headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(';'))];
+    const csv=[headers.join(';'),...rows.map(r=>headers.map(h=>`"${(r[h]||'').toString().replace(/"/g,'""')}"`).join(';'))].join('\n');
     const a=document.createElement('a');
-    a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csvRows.join('\n'));
+    a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
     a.download='reponses_questionnaire.csv'; a.click();
   };
 
-  window._switchTab=function(t) {
+  window._switchTab=function(t,el) {
     adminTab=t;
-    document.querySelectorAll('.atab').forEach(el=>el.classList.toggle('active',el.dataset.tab===t));
-    document.querySelectorAll('.tab-pane').forEach(el=>el.classList.toggle('active',el.id==='tab-'+t));
+    document.querySelectorAll('.atab').forEach(b=>b.classList.remove('active'));
+    el.classList.add('active');
+    document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+    document.getElementById('tab-'+t).classList.add('active');
   };
 
-  // Individual responses HTML
-  const intentionTag=(v)=>{
-    if (['Oui, certainement','Oui, probablement'].includes(v)) return `<span class="resp-tag positive">${v}</span>`;
-    if (v==='Je ne sais pas') return `<span class="resp-tag neutral">${v}</span>`;
-    return `<span class="resp-tag negative">${v}</span>`;
+  const intentionTag=v=>{
+    if (['Oui, certainement','Oui, probablement'].includes(v)) return `<span class="resp-tag tag-positive">${v}</span>`;
+    if (v==='Je ne sais pas') return `<span class="resp-tag tag-neutral">${v}</span>`;
+    return `<span class="resp-tag tag-negative">${v||'—'}</span>`;
   };
-  const fmtVal=v=>v||'—';
+
+  const statsHtml = total===0
+    ? `<div class="empty-state">Aucune réponse enregistrée pour l'instant.<br>Les données apparaîtront ici après les premières soumissions.</div>`
+    : `
+      <div class="section-lbl">Profil</div>
+      ${makeChart("Tranche d'âge", col('Âge'))}
+      ${makeChart("Connaissait le service", col('Connaissait le service'))}
+      ${makeChart("A déjà organisé un repas après obsèques", col('A déjà organisé'))}
+      <div class="section-lbl">Intention & freins</div>
+      ${makeChart("Intention de faire appel au service", col('Intention'))}
+      ${makeChart("Difficultés rencontrées", col('Difficultés rencontrées'))}
+      ${makeChart("Freins principaux", col('Freins'))}
+      ${makeChart("Ce qui pourrait faire changer d'avis", col('Levier de réassurance'))}
+      <div class="section-lbl">Attentes & préférences</div>
+      ${makeChart("Attentes vis-à-vis du service", col('Attentes'))}
+      ${makeChart("Critères de confiance", col('Critères de confiance'))}
+      ${makeChart("Perception de l'équipe familiale", col('Équipe familiale'))}
+      ${makeChart("Type de prestation souhaité", col('Type de prestation'))}
+      <div class="section-lbl">Budget & canaux</div>
+      ${makeChart("Budget acceptable par personne", col('Budget'))}
+      ${makeChart("Canal de recherche", col('Canal de recherche'))}`;
 
   const respHtml = total===0
     ? `<div class="empty-state">Aucune réponse enregistrée pour l'instant.</div>`
@@ -451,47 +430,22 @@ async function renderAdmin() {
           <span class="resp-num">Réponse #${total-i}</span>
           <span class="resp-date">${r['Date']||''}</span>
         </div>
-        <div class="resp-row"><strong>Âge :</strong> ${fmtVal(r['Âge'])}</div>
-        <div class="resp-row"><strong>Connaissait le service :</strong> ${fmtVal(r['Connaissait le service'])}</div>
-        <div class="resp-row"><strong>A déjà organisé :</strong> ${fmtVal(r['A déjà organisé'])}${r['Difficultés rencontrées']?` — <em>${r['Difficultés rencontrées']}</em>`:''}</div>
+        <div class="resp-row"><strong>Âge :</strong> ${r['Âge']||'—'}</div>
+        <div class="resp-row"><strong>Connaissait le service :</strong> ${r['Connaissait le service']||'—'}</div>
+        <div class="resp-row"><strong>A déjà organisé :</strong> ${r['A déjà organisé']||'—'}${r['Difficultés rencontrées']?` — <em>${r['Difficultés rencontrées']}</em>`:''}</div>
         <div class="resp-row"><strong>Intention :</strong> ${intentionTag(r['Intention'])}</div>
         ${r['Attentes']?`<div class="resp-row"><strong>Attentes :</strong> ${r['Attentes']}</div>`:''}
         ${r['Freins']?`<div class="resp-row"><strong>Freins :</strong> ${r['Freins']}</div>`:''}
         ${r['Levier de réassurance']?`<div class="resp-row"><strong>Levier de réassurance :</strong> ${r['Levier de réassurance']}</div>`:''}
-        <div class="resp-row"><strong>Budget :</strong> ${fmtVal(r['Budget'])}</div>
+        <div class="resp-row"><strong>Budget :</strong> ${r['Budget']||'—'}</div>
         ${r['Commentaire libre']?`<div class="resp-verbatim">"${r['Commentaire libre']}"</div>`:''}
       </div>`).join('')+`</div>`;
-
-  const statsHtml = total===0
-    ? `<div class="empty-state">Aucune réponse enregistrée pour l'instant.<br>Les données apparaîtront ici après les premières soumissions.</div>`
-    : `
-      <div class="section-lbl">Profil</div>
-      ${makeChart("Tranche d'âge", col('Âge'))}
-      ${makeChart("Connaissait le service", col('Connaissait le service'))}
-      ${makeChart("A déjà organisé un repas après obsèques", col('A déjà organisé'))}
-
-      <div class="section-lbl">Intention & freins</div>
-      ${makeChart("Intention de faire appel au service", col('Intention'))}
-      ${makeChart("Difficultés rencontrées lors d'une organisation passée", col('Difficultés rencontrées'))}
-      ${makeChart("Freins principaux", col('Freins'))}
-      ${makeChart("Ce qui pourrait faire changer d'avis", col('Levier de réassurance'))}
-
-      <div class="section-lbl">Attentes & préférences</div>
-      ${makeChart("Attentes vis-à-vis du service", col('Attentes'))}
-      ${makeChart("Critères de confiance", col('Critères de confiance'))}
-      ${makeChart("Perception de l'équipe familiale", col('Équipe familiale'))}
-      ${makeChart("Type de prestation souhaité", col('Type de prestation'))}
-
-      <div class="section-lbl">Budget & canaux</div>
-      ${makeChart("Budget acceptable par personne", col('Budget'))}
-      ${makeChart("Canal de recherche", col('Canal de recherche'))}
-    `;
 
   document.getElementById('adminContent').innerHTML=`
     <div class="admin-topbar">
       <div>
         <h2>Résultats du questionnaire</h2>
-        <div class="admin-topbar-sub">${total} réponse${total>1?'s':''} · ${todayCount} aujourd'hui · ${positif} intéressé${positif>1?'s':''}</div>
+        <div class="admin-topbar-sub">${total} réponse${total>1?'s':''} · ${todayCount} aujourd'hui · ${total>0?Math.round(positif/total*100):0} % intéressés</div>
       </div>
       <div class="admin-actions">
         <button class="btn-outline" onclick="renderAdmin()">Actualiser</button>
@@ -499,21 +453,17 @@ async function renderAdmin() {
         <button class="btn-outline btn-dark" onclick="hideAdmin()">Fermer</button>
       </div>
     </div>
-
     <div class="stats-grid">
       <div class="stat-box"><div class="stat-num">${total}</div><div class="stat-lbl">Réponses totales</div></div>
       <div class="stat-box"><div class="stat-num">${todayCount}</div><div class="stat-lbl">Aujourd'hui</div></div>
       <div class="stat-box"><div class="stat-num">${total>0?Math.round(positif/total*100):0} %</div><div class="stat-lbl">Intéressés</div></div>
     </div>
-
     <div class="admin-tabs">
-      <button class="atab ${adminTab==='stats'?'active':''}" data-tab="stats" onclick="window._switchTab('stats')">Statistiques</button>
-      <button class="atab ${adminTab==='responses'?'active':''}" data-tab="responses" onclick="window._switchTab('responses')">Réponses individuelles</button>
+      <button class="atab ${adminTab==='stats'?'active':''}" onclick="window._switchTab('stats',this)">Statistiques</button>
+      <button class="atab ${adminTab==='responses'?'active':''}" onclick="window._switchTab('responses',this)">Réponses individuelles</button>
     </div>
-
     <div class="tab-pane ${adminTab==='stats'?'active':''}" id="tab-stats">${statsHtml}</div>
-    <div class="tab-pane ${adminTab==='responses'?'active':''}" id="tab-responses">${respHtml}</div>
-  `;
+    <div class="tab-pane ${adminTab==='responses'?'active':''}" id="tab-responses">${respHtml}</div>`;
 }
 
 if (window.location.search.includes('admin')) showAdmin();
