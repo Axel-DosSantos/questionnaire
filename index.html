@@ -286,14 +286,13 @@ function sendToSheets() {
     .catch(err=>console.warn('POST error:',err));
 }
 
-// Proxy allorigins pour contourner le CORS en lecture
+// Proxy corsproxy.io pour contourner le CORS en lecture
 async function fetchResponses() {
-  const proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(SCRIPT_URL);
+  const proxy = 'https://corsproxy.io/?' + encodeURIComponent(SCRIPT_URL);
   const res = await fetch(proxy);
   if (!res.ok) throw new Error('Proxy error ' + res.status);
   const json = await res.json();
-  const data = JSON.parse(json.contents);
-  return data.data || [];
+  return json.data || [];
 }
 
 // ── ADMIN ──────────────────────────────────────────────
