@@ -286,26 +286,14 @@ function sendToSheets() {
     .catch(err=>console.warn('POST error:',err));
 }
 
-// JSONP pour contourner le CORS en lecture
-function fetchResponses() {
-  return new Promise((resolve, reject) => {
-    const cbName = 'jsonpCb_' + Date.now();
-    const script = document.createElement('script');
-    const timeout = setTimeout(() => {
-      delete window[cbName];
-      document.body.removeChild(script);
-      reject(new Error('Timeout'));
-    }, 10000);
-    window[cbName] = function(data) {
-      clearTimeout(timeout);
-      delete window[cbName];
-      document.body.removeChild(script);
-      resolve(data.data || []);
-    };
-    script.src = SCRIPT_URL + '?callback=' + cbName;
-    script.onerror = () => { clearTimeout(timeout); delete window[cbName]; reject(new Error('Script error')); };
-    document.body.appendChild(script);
-  });
+// Proxy allorigins pour contourner le CORS en lecture
+async function fetchResponses() {
+  const proxy = 'https://api.allorigins.win/get?url=' + encodeURIComponent(SCRIPT_URL);
+  const res = await fetch(proxy);
+  if (!res.ok) throw new Error('Proxy error ' + res.status);
+  const json = await res.json();
+  const data = JSON.parse(json.contents);
+  return data.data || [];
 }
 
 // ── ADMIN ──────────────────────────────────────────────
