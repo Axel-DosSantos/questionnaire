@@ -158,7 +158,7 @@ let adminTab  = 'stats';
 
 const steps = {
   intro: { type:'intro', title:"Questionnaire \u2013 Votre avis nous aidera \u00e0 imaginer un service vraiment utile", paras:[
-    "Apr\u00e8s des obs\u00e8ques, il est parfois difficile de penser \u00e0 l'organisation du moment de partage qui r\u00e9unit la famille et les proches.",
+    "Pendant un deuil, il est parfois difficile de penser \u00e0 l'organisation du moment de partage qui r\u00e9unit la famille et les proches apr\u00e8s les obs\u00e8ques.",
     "Nous r\u00e9fl\u00e9chissons \u00e0 un service de traiteur \u00e0 domicile qui permettrait de soulager les familles durant cette p\u00e9riode.",
     "Votre avis est pr\u00e9cieux. Ce questionnaire est anonyme et ne vous prendra que quelques minutes."
   ] },
@@ -176,8 +176,9 @@ const steps = {
   q7:  { meta:'Question 8 sur 12', text:"Le fait que ce service soit assuré par une petite équipe familiale constitue pour vous :", type:'single', opts:["Un vrai critère de confiance","Un élément rassurant, sans être déterminant","Un point qui m'est indifférent","Un élément qui pourrait me faire hésiter"] },
   q8:  { meta:'Question 9 sur 12', text:"Quel type de prestation vous semblerait le plus adapté ?", sub:"Buffet = plats en libre-service · Cocktail = petites pièces à grignoter", type:'single', opts:["Buffet froid","Buffet chaud","Cocktail salé","Cocktail salé et sucré","Café, boissons et mignardises uniquement","Je ne sais pas"] },
   q9:  { meta:'Question 10 sur 12', text:"Quel budget vous semblerait raisonnable pour une prestation complète — courses, préparation, livraison, installation, service et vaisselle ?", type:'single', opts:["Moins de 20 € par personne","Entre 20 € et 30 € par personne","Entre 30 € et 40 € par personne","Plus de 40 € par personne","Je ne sais pas"] },
-  q10: { meta:'Question 11 sur 12', text:"Comment penseriez-vous à rechercher ce type de prestation ?", type:'single', opts:["Je demanderais conseil à une entreprise de pompes funèbres","J'effectuerais une recherche sur Internet","Je demanderais à mes proches","Je contacterais un traiteur que je connais déjà","Je demanderais conseil à une mairie ou une association","Autre"] },
-  q11: { meta:'Question 6 sur 12', text:"Quelles seraient vos principales raisons de ne pas y faire appel — ou d'hésiter ?", sub:"Plusieurs réponses possibles, puis cliquez sur Continuer", type:'multi', max:99,
+  q10: { meta:'Question 11 sur 12', text:"Si vous aviez besoin de ce type de prestation, comment penseriez-vous à la rechercher ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
+         opts:["Je demanderais conseil à une entreprise de pompes funèbres","J'effectuerais une recherche sur Internet","Je demanderais à mes proches","Je contacterais un traiteur que je connais déjà","Je demanderais conseil à une mairie ou une association","Autre"] },
+  q11: { meta:'Question 6 sur 12', text:"Quelles seraient vos principales raisons de ne pas y faire appel ou d'hésiter ?", sub:"Plusieurs réponses possibles, puis cliquez sur Continuer", type:'multi', max:99,
          opts:["Je préférerais cuisiner moi-même","Ma famille s'en chargerait","Je préférerais organiser un repas au restaurant","Je trouverais ce service trop coûteux","Je ne me sentirais pas à l'aise avec un prestataire dans ce contexte","J'aurais besoin de mieux connaître ce type de service","Je manquerais de confiance envers le prestataire","Autre"] },
   q12: { meta:'Question 7 sur 12', text:"Qu'est-ce qui pourrait vous rassurer ou vous faire changer d'avis ?", type:'single', opts:["Une recommandation des pompes funèbres","Des avis de familles ayant utilisé ce service","Une meilleure connaissance de la prestation","Des tarifs plus accessibles","Une entreprise familiale","Rien, je préférerais toujours une autre solution","Autre"] },
   q13: { meta:'Pour finir', text:"Un dernier mot ? (facultatif)", sub:"Une attente, une inquiétude ou une idée à partager concernant ce type de service.", type:'textarea' },
@@ -299,7 +300,7 @@ function sendToSheets() {
     date:new Date().toLocaleString('fr-FR'),
     q0:A.q0||'',q1:A.q1||'',q2:A.q2||'',q3:A.q3||'',q3b:A.q3b||[],
     q4:A.q4||'',q5:A.q5||[],q6:A.q6||[],q7:A.q7||'',
-    q8:A.q8||'',q9:A.q9||'',q10:A.q10||'',q11:A.q11||[],
+    q8:A.q8||'',q9:A.q9||'',q10:A.q10||[],q11:A.q11||[],
     q12:A.q12||'',q13:A.q13||''
   };
   fetch(SCRIPT_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
