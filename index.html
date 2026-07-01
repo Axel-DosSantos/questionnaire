@@ -54,6 +54,10 @@
   .end-title { font-size: 20px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; }
   .end-sub { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 380px; margin: 0 auto 32px; }
   .end-divider { width: 32px; height: 2px; background: var(--border); margin: 0 auto 28px; }
+  .intro-title { font-size: 19px; font-weight: 600; color: var(--text-primary); margin-bottom: 20px; line-height: 1.5; }
+  .intro-para { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 14px; }
+  .intro-para:last-of-type { margin-bottom: 30px; }
+  .btn-start { width: 100%; }
 
   /* ADMIN */
   #adminOverlay { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 100; overflow-y: auto; padding: 40px 20px 80px; }
@@ -146,30 +150,36 @@ const ADMIN_PWD  = 'azertyuiop';
 
 const A = {};
 let hist = [];
-let currentId = 'q1';
+let currentId = 'intro';
 let inHesitantTail = false;
 let autoTimer = null;
 let adminAuth = false;
 let adminTab  = 'stats';
 
 const steps = {
-  q1:  { meta:'Question 1 sur 11', text:"Dans quelle tranche d'âge vous situez-vous ?", type:'single', opts:['Moins de 30 ans','30 à 44 ans','45 à 59 ans','60 à 74 ans','75 ans et plus'] },
-  q2:  { meta:'Question 2 sur 11', text:"Saviez-vous qu'il était possible de faire appel à un traiteur à domicile pour le repas qui suit des obsèques ?", type:'single', opts:['Oui','Non'] },
-  q3:  { meta:'Question 3 sur 11', text:"Avez-vous déjà eu à organiser tout ou partie d'un repas de partage après des obsèques ?", type:'single', opts:['Oui','Non'] },
-  q3b: { meta:'Question 3 sur 11', text:"Qu'est-ce qui vous a semblé le plus difficile ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
+  intro: { type:'intro', title:"Questionnaire \u2013 Votre avis nous aidera \u00e0 imaginer un service vraiment utile", paras:[
+    "Apr\u00e8s des obs\u00e8ques, il est parfois difficile de penser \u00e0 l'organisation du moment de partage qui r\u00e9unit la famille et les proches.",
+    "Nous r\u00e9fl\u00e9chissons \u00e0 un service de traiteur \u00e0 domicile qui permettrait de soulager les familles durant cette p\u00e9riode.",
+    "Votre avis est pr\u00e9cieux. Ce questionnaire est anonyme et ne vous prendra que quelques minutes."
+  ] },
+  q0:  { meta:'Question 1 sur 12', text:"Vous \u00eates ?", type:'single', opts:['Femme','Homme','Pr\u00e9f\u00e8re ne pas r\u00e9pondre'] },
+  q1:  { meta:'Question 2 sur 12', text:"Dans quelle tranche d'âge vous situez-vous ?", type:'single', opts:['Moins de 30 ans','30 à 44 ans','45 à 59 ans','60 à 74 ans','75 ans et plus'] },
+  q2:  { meta:'Question 3 sur 12', text:"Saviez-vous qu'il était possible de faire appel à un traiteur à domicile pour le repas qui suit des obsèques ?", type:'single', opts:['Oui','Non'] },
+  q3:  { meta:'Question 4 sur 12', text:"Avez-vous déjà eu à organiser tout ou partie d'un repas de partage après des obsèques ?", type:'single', opts:['Oui','Non'] },
+  q3b: { meta:'Question 4 sur 12', text:"Qu'est-ce qui vous a semblé le plus difficile ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
          opts:["Gérer les démarches liées aux obsèques en parallèle","Rester disponible pour accueillir les proches","Préparer les plats moi-même","Trouver un traiteur adapté","Gérer l'organisation et le service du repas","Faire la vaisselle et le rangement","Choisir entre un repas à domicile ou au restaurant","Rien de particulier","Autre"] },
-  q4:  { meta:'Question 4 sur 11', text:"Si vous deviez organiser ce moment aujourd'hui, envisageriez-vous de faire appel à un service de traiteur à domicile ?", type:'single', opts:["Oui, certainement","Oui, probablement","Je ne sais pas","Probablement pas","Non"] },
-  q5:  { meta:'Question 5 sur 11', text:"Qu'attendriez-vous avant tout d'un tel service ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
+  q4:  { meta:'Question 5 sur 12', text:"Si vous deviez organiser ce moment aujourd'hui, envisageriez-vous de faire appel à un service de traiteur à domicile ?", type:'single', opts:["Oui, certainement","Oui, probablement","Je ne sais pas","Probablement pas","Non"] },
+  q5:  { meta:'Question 6 sur 12', text:"Qu'attendriez-vous avant tout d'un tel service ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
          opts:["Être soulagé(e) de l'organisation du repas","Pouvoir rester auprès de mes proches","Réduire la charge mentale","Accueillir la famille sereinement à domicile","Éviter les contraintes d'un restaurant","Ne pas avoir à gérer la vaisselle ni le rangement","Offrir un moment chaleureux et convivial","Bénéficier d'un service discret et respectueux","Autre"] },
-  q6:  { meta:'Question 6 sur 11', text:"Quels éléments vous mettraient le plus en confiance ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
+  q6:  { meta:'Question 7 sur 12', text:"Quels éléments vous mettraient le plus en confiance ?", sub:"Jusqu'à 3 réponses, puis cliquez sur Continuer", type:'multi', max:3,
          opts:["Des avis de familles ayant utilisé ce service","Une équipe discrète et respectueuse","Des tarifs transparents","Une expérience dans ce type d'accompagnement","Une présentation claire des prestations","Un premier échange téléphonique","Des produits de qualité","Une entreprise familiale","Autre"] },
-  q7:  { meta:'Question 7 sur 11', text:"Le fait que ce service soit assuré par une petite équipe familiale constitue pour vous :", type:'single', opts:["Un vrai critère de confiance","Un élément rassurant, sans être déterminant","Un point qui m'est indifférent","Un élément qui pourrait me faire hésiter"] },
-  q8:  { meta:'Question 8 sur 11', text:"Quel type de prestation vous semblerait le plus adapté ?", sub:"Buffet = plats en libre-service · Cocktail = petites pièces à grignoter", type:'single', opts:["Buffet froid","Buffet chaud","Cocktail salé","Cocktail salé et sucré","Café, boissons et mignardises uniquement","Je ne sais pas"] },
-  q9:  { meta:'Question 9 sur 11', text:"Quel budget vous semblerait raisonnable pour une prestation complète — courses, préparation, livraison, installation, service et vaisselle ?", type:'single', opts:["Moins de 20 € par personne","Entre 20 € et 30 € par personne","Entre 30 € et 40 € par personne","Plus de 40 € par personne","Je ne sais pas"] },
-  q10: { meta:'Question 10 sur 11', text:"Comment penseriez-vous à rechercher ce type de prestation ?", type:'single', opts:["Je demanderais conseil à une entreprise de pompes funèbres","J'effectuerais une recherche sur Internet","Je demanderais à mes proches","Je contacterais un traiteur que je connais déjà","Je demanderais conseil à une mairie ou une association","Autre"] },
-  q11: { meta:'Question 5 sur 11', text:"Quelles seraient vos principales raisons de ne pas y faire appel — ou d'hésiter ?", sub:"Plusieurs réponses possibles, puis cliquez sur Continuer", type:'multi', max:99,
+  q7:  { meta:'Question 8 sur 12', text:"Le fait que ce service soit assuré par une petite équipe familiale constitue pour vous :", type:'single', opts:["Un vrai critère de confiance","Un élément rassurant, sans être déterminant","Un point qui m'est indifférent","Un élément qui pourrait me faire hésiter"] },
+  q8:  { meta:'Question 9 sur 12', text:"Quel type de prestation vous semblerait le plus adapté ?", sub:"Buffet = plats en libre-service · Cocktail = petites pièces à grignoter", type:'single', opts:["Buffet froid","Buffet chaud","Cocktail salé","Cocktail salé et sucré","Café, boissons et mignardises uniquement","Je ne sais pas"] },
+  q9:  { meta:'Question 10 sur 12', text:"Quel budget vous semblerait raisonnable pour une prestation complète — courses, préparation, livraison, installation, service et vaisselle ?", type:'single', opts:["Moins de 20 € par personne","Entre 20 € et 30 € par personne","Entre 30 € et 40 € par personne","Plus de 40 € par personne","Je ne sais pas"] },
+  q10: { meta:'Question 11 sur 12', text:"Comment penseriez-vous à rechercher ce type de prestation ?", type:'single', opts:["Je demanderais conseil à une entreprise de pompes funèbres","J'effectuerais une recherche sur Internet","Je demanderais à mes proches","Je contacterais un traiteur que je connais déjà","Je demanderais conseil à une mairie ou une association","Autre"] },
+  q11: { meta:'Question 6 sur 12', text:"Quelles seraient vos principales raisons de ne pas y faire appel — ou d'hésiter ?", sub:"Plusieurs réponses possibles, puis cliquez sur Continuer", type:'multi', max:99,
          opts:["Je préférerais cuisiner moi-même","Ma famille s'en chargerait","Je préférerais organiser un repas au restaurant","Je trouverais ce service trop coûteux","Je ne me sentirais pas à l'aise avec un prestataire dans ce contexte","J'aurais besoin de mieux connaître ce type de service","Je manquerais de confiance envers le prestataire","Autre"] },
-  q12: { meta:'Question 6 sur 11', text:"Qu'est-ce qui pourrait vous rassurer ou vous faire changer d'avis ?", type:'single', opts:["Une recommandation des pompes funèbres","Des avis de familles ayant utilisé ce service","Une meilleure connaissance de la prestation","Des tarifs plus accessibles","Une entreprise familiale","Rien, je préférerais toujours une autre solution","Autre"] },
+  q12: { meta:'Question 7 sur 12', text:"Qu'est-ce qui pourrait vous rassurer ou vous faire changer d'avis ?", type:'single', opts:["Une recommandation des pompes funèbres","Des avis de familles ayant utilisé ce service","Une meilleure connaissance de la prestation","Des tarifs plus accessibles","Une entreprise familiale","Rien, je préférerais toujours une autre solution","Autre"] },
   q13: { meta:'Pour finir', text:"Un dernier mot ? (facultatif)", sub:"Une attente, une inquiétude ou une idée à partager concernant ce type de service.", type:'textarea' },
   fin: { type:'fin' }
 };
@@ -179,11 +189,11 @@ function nextStep(from) {
   if (inHesitantTail && from==='q6') return 'q7';
   if (inHesitantTail && from==='q7') { inHesitantTail=false; return 'q9'; }
   if (from==='q12') { if (q4==='Je ne sais pas') { inHesitantTail=true; return 'q6'; } return 'q9'; }
-  const map = { q1:'q2', q2:'q3', q3:A['q3']==='Oui'?'q3b':'q4', q3b:'q4', q4:(q4==='Oui, certainement'||q4==='Oui, probablement')?'q5':'q11', q5:'q6', q6:'q7', q7:'q8', q8:'q9', q9:'q10', q10:'q13', q11:'q12', q13:'fin' };
+  const map = { intro:'q0', q0:'q1', q1:'q2', q2:'q3', q3:A['q3']==='Oui'?'q3b':'q4', q3b:'q4', q4:(q4==='Oui, certainement'||q4==='Oui, probablement')?'q5':'q11', q5:'q6', q6:'q7', q7:'q8', q8:'q9', q9:'q10', q10:'q13', q11:'q12', q13:'fin' };
   return map[from]||'fin';
 }
 
-function getProgress() { return Math.min(100, Math.round((hist.length/12)*100)); }
+function getProgress() { return Math.min(100, Math.round((hist.length/13)*100)); }
 
 function render(id) {
   if (autoTimer) { clearTimeout(autoTimer); autoTimer=null; }
@@ -191,6 +201,16 @@ function render(id) {
   document.getElementById('progressFill').style.width=pct+'%';
   document.getElementById('progressPct').textContent=pct+' %';
   const s=steps[id]; if (!s) return;
+
+  if (s.type==='intro') {
+    document.getElementById('card').innerHTML=`
+      <div class="end-screen fade-slide">
+        <div class="intro-title">${s.title}</div>
+        ${s.paras.map(p=>`<div class="intro-para">${p}</div>`).join('')}
+        <button class="btn btn-continue btn-start" onclick="goNext()">Commencer</button>
+      </div>`;
+    return;
+  }
 
   if (s.type==='fin') {
     document.getElementById('progressFill').style.width='100%';
@@ -267,17 +287,17 @@ function goBack() {
 }
 function restart() {
   Object.keys(A).forEach(k=>delete A[k]);
-  hist=[]; currentId='q1'; inHesitantTail=false; autoTimer=null;
+  hist=[]; currentId='intro'; inHesitantTail=false; autoTimer=null;
   document.getElementById('progressFill').style.width='0%';
   document.getElementById('progressPct').textContent='0 %';
-  render('q1'); window.scrollTo({top:0,behavior:'smooth'});
+  render('intro'); window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ── GOOGLE SHEETS ──────────────────────────────────────
 function sendToSheets() {
   const payload={
     date:new Date().toLocaleString('fr-FR'),
-    q1:A.q1||'',q2:A.q2||'',q3:A.q3||'',q3b:A.q3b||[],
+    q0:A.q0||'',q1:A.q1||'',q2:A.q2||'',q3:A.q3||'',q3b:A.q3b||[],
     q4:A.q4||'',q5:A.q5||[],q6:A.q6||[],q7:A.q7||'',
     q8:A.q8||'',q9:A.q9||'',q10:A.q10||'',q11:A.q11||[],
     q12:A.q12||'',q13:A.q13||''
@@ -454,7 +474,7 @@ async function renderAdmin() {
 }
 
 if (window.location.search.includes('admin')) showAdmin();
-render('q1');
+render('intro');
 </script>
 </body>
 </html>
